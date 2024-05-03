@@ -1,0 +1,11 @@
+# This file may be used to create an environment using:
+# $ conda create --name <env> --file <this file>
+# platform: win-64
+tensorflow == 2.16.1
+datasets == 2.19.0
+transformers == 4.40.1
+pillow == 10.3.0
+accelerate==0.29.3
+evaluate==0.4.2
+torch==2.2.2
+torchvision==0.17.2
