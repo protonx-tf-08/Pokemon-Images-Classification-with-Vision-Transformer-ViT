@@ -25,21 +25,25 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    print('---------------------Welcome to ${name}-------------------')
-    print('Github: ${account}')
-    print('Email: ${email}')
+    print('---------------------Welcome to Pokemon Images Classification with Vision Transformers-------------------')
+    print('Github: Dungfx15018 and EveTLynn')
+    print('Email: dungtrandinh513@gmail.com and linhtong1201@gmail.com')
     print('---------------------------------------------------------------------')
-    print('Training ${name} model with hyper-params:')
+    print('Training Image Classification model with hyper-params:')
     print('===========================')
 
     # Process data
     dataset = load_dataset("fcakyon/pokemon-classification", name="full")
-    dataset["train"] = concatenate_datasets([dataset["train"], dataset["validation"]])
-    dataset["train"] = concatenate_datasets([dataset["train"], dataset["test"]])
-    dataset = dataset['train'].train_test_split(test_size=0.2)
+    full_dataset = concatenate_datasets([dataset["train"], dataset["validation"]])
+    full_dataset = concatenate_datasets([full_dataset, dataset["test"]])
 
-    dataset = dataset.with_transform(transform)
-    labels = dataset['train'].features['labels'].names
+    shuffled_dataset = full_dataset.shuffle(seed=42)
+    splitted_dataset= shuffled_dataset.train_test_split(test_size=0.2)
+
+    train_dataset = splitted_dataset['train'].with_transform(transform)
+    test_dataset = splitted_dataset['test'].with_transform(transform)
+
+    labels = train_dataset.features['labels'].names
     label2id, id2label = dict(), dict()
     for i, label in enumerate(labels):
         label2id[label] = str(i)
@@ -82,8 +86,8 @@ if __name__ == "__main__":
         args=training_args,
         data_collator=collate_fn,
         compute_metrics=compute_metrics,
-        train_dataset=dataset["train"],
-        eval_dataset=dataset["test"],
+        train_dataset=train_dataset,
+        eval_dataset=test_dataset ,
         tokenizer=image_processor,
     )
 
