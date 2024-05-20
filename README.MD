@@ -69,7 +69,10 @@ There are some important arguments for the script you should consider when runni
 ## IV. Predict Process
 
 ```shell
-python predict.py --test-data ${link_to_test_data}
+!python predict.py --dir-model 'pokemon_models/checkpoint-1610' --image-path '0cfe57a5bf674650b0de0c381df13ca0_jpg.rf.cf29339aa61d57131478f066ba7cceba.jpg'  --checkpoint  'google/vit-base-patch16-224-in21k' --data-dir 'fcakyon/pokemon-classification'  --test-size 0.2 
+
+[{'score': 0.7122378349304199, 'label': 'Alakazam'}, {'score': 0.03247630596160889, 'label': 'Kadabra'}, {'score': 0.0074781812727451324, 'label': 'Abra'}, {'score': 0.0038069335278123617, 'label': 'Farfetchd'}, {'score': 0.0037275038193911314, 'label': 'Beedrill'}]
+
 ```
 
 ## V. Result and Comparision
